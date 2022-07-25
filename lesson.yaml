@@ -1,0 +1,149 @@
+- Class: meta
+  Course: Data Visualization
+  Lesson: Bar Charts
+  Author: Avishkar Kanade
+  Type: Standard
+  Organization: Hochschule Fresenius
+  Version: 2.4.5
+
+- Class: text
+  Output: Welcome to the swirl course on Data Visualization using ggplot2. 
+
+- Class: text
+  Output: This module will teach you to visualize a data frame using ggplot2 to create bar charts.
+
+- Class: mult_question
+  Output: So, are you ready to start this module?
+  AnswerChoices: Yes; No
+  CorrectAnswer: Yes
+  AnswerTests: omnitest(correctVal='Yes')
+  Hint: Of course you are!!
+
+- Class: text
+  Output: Before we begin, its important to make sure that we have the right set of packages installed in the packages library. 
+
+- Class: text
+  Output: If not, then please install the "tidyverse" and "swirl" packages using the install.packages() function.
+
+- Class: text
+  Output: Great! Now let's begin by loading a data frame in our environment. For this course we are going to use a custom data frame which is created by combining two different data frames from the World Bank data.
+
+- Class: video
+  Output: Type "Yes" to visit the Github page that stores our data frame.Once you are on the github page, please download the dataframe and open it with Rstudio before typing "nxt()"".This should load our dataframe in the global environment.
+  VideoLink: https://github.com/Srikss/swirlify-dataset/blob/main/master_data.RData
+
+- Class: mult_question
+  Output: Can you see the "master_data" data frame in your global environment?
+  AnswerChoices: Yes ; No
+  CorrectAnswer: Yes
+  AnswerTests: omnitest(correctVal='Yes')
+  Hint: If not again follow thw previous step before moving forward with the lesson.
+
+- Class: cmd_question
+  Output: Now lets plot the data frame using ggplot2.
+  CorrectAnswer: ggplot(data = master_data)
+  AnswerTests: omnitest(correctExpr='ggplot(data = master_data)')
+  Hint: Type - ggplot(data = master_data)
+
+- Class: text
+  Output: As you can see the above step creates a graph but its empty and unintresting.
+  
+- Class: text
+  Output: To make the graph meaningful we need to add one or more layes to the ggplot() function.The function geom_bar() is an additional  layer that creates a bar chart.
+  
+- Class: text
+  Output: These geom function in ggplot2 requires a mapping argument which is always paired with aes(), and the x and y arguments of aes() specify which variables to map on the respective axes.  
+  
+- Class: cmd_question
+  Output: so, lets try adding a layer of geom_bar over ggplot for data frame "master_data" by using the "year" variable on x axis.
+  CorrectAnswer: ggplot(data=master_data) + geom_bar(mapping = aes(x= year))
+  AnswerTests: omnitest(correctExpr='ggplot(data=master_data) + geom_bar(mapping = aes(x= year))')
+  Hint: Type - ggplot(data=master_data) + geom_bar(mapping = aes(x= year))
+
+- Class: text
+  Output: As you can see, we have now generated a graph of year vs count. But, count wasn't even a variable from our data frame and it doesn't serve any purpose on our plot.
+
+- Class: text
+  Output: If you want the heights of the bars to represent values in the data, use geom_col() instead of geom_bar().
+
+- Class: cmd_question
+  Output: Now let's try to use geom_col with ggplot by mapping the variable year on x axis and urbanpop on y axis.
+  CorrectAnswer: ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop))
+  AnswerTests: omnitest(correctExpr='ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop))')
+  Hint: Type - ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop))
+
+- Class: text
+  Output: Great! Now our data perfectly represents urban population for each year. Now, let's try to figure out the trends of urban population with respect to country.
+
+- Class: cmd_question
+  Output: To do this we will write the same code as written in the previous step, only this time setting the colour and fill to country.
+  CorrectAnswer: ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, colour= country, fill= country))
+  AnswerTests: omnitest(correctExpr='ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, colour= country, fill= country))')
+  Hint: Type - ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, colour= country, fill= country))
+
+- Class: text
+  Output: And that's it. our plot is complete and it accurately denotes the trends of urban population with year for each country.
+  
+- Class: text
+  Output: Now, let's make some aesthetic changes to our bar plot.
+  
+- Class: text
+  Output: Right now, each country is represented by different colours. We are able to differentiate between countries but it is not aesthetically appealing.
+
+- Class: text
+  Output:  It's better if we represent the countries in the shade of one color. To do this, we need to use the "scale_fill_brewer(palette= )" function.
+
+- Class: cmd_question
+  Output: Just add a layer of scale_fill_brewer(palette= "Blues") to the previous line of code.
+  CorrectAnswer:  ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, fill = country)) + scale_fill_brewer(palette="Blues")
+
+  AnswerTests: omnitest(correctExpr=' ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, fill = country)) + scale_fill_brewer(palette="Blues")')
+  Hint: Type -  ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, fill = country)) + scale_fill_brewer(palette="Blues")
+
+
+- Class: text
+  Output: Good job! As you might have noticed, making aesthetic changes is just a process of adding layers of functions over the ggplot() function. We recommend copying the previous line of code so that you won't have to write the whole code from start again. Please do this for every step henceforth.
+
+
+- Class: text
+  Output:  Let's continue by looking at the theme() function. Making use of themes is a powerful way to customize the non-data components of your plots i.e. titles, labels, fonts, background, gridlines, and legends. Themes can be used to give plots a consistent customized look.
+
+
+- Class: text
+  Output: Now, let's use the theme() function to customize the x and y axis texts. The theme() function is as follows - theme(axis.text.x = element_text(face="", color="", size=, angle=)
+
+- Class: text
+  Output: Apply this layer of theme function over our previous code. Use face="italic", color="blue", size="8", angle=45 for x axis. For y axis just make the angle=0, keep everything the same. 
+
+- Class: cmd_question
+  Output: Please type the code.
+  CorrectAnswer: ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, fill = country)) + scale_fill_brewer(palette="Blues") + theme(axis.text.x = element_text(face="bold", color="blue",size=8, angle=45),axis.text.y = element_text(face="bold", color="blue",size=8, angle=0))
+  AnswerTests: omnitest(correctExpr='ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, fill = country)) + scale_fill_brewer(palette="Blues") + theme(axis.text.x = element_text(face="bold", color="blue",size=8, angle=45),axis.text.y = element_text(face="bold", color="blue",size=8, angle=0))')
+  Hint: Type - ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= urbanpop, fill = country)) + scale_fill_brewer(palette="Blues") + theme(axis.text.x = element_text(face="bold", color="blue",size=8, angle=45),axis.text.y = element_text(face="bold", color="blue",size=8, angle=0))
+
+- Class: text
+  Output: Great! you got it. 
+
+- Class: cmd_question
+  Output: Now, try plotting year vs forestland on the same data frame.
+  CorrectAnswer:  ggplot(data = master_data) + geom_col(mapping = aes(x= year, y= forestland))
+
+  AnswerTests: omnitest(correctExpr=' ggplot(data = master_data) + geom_col(mapping = aes(x= year, y= forestland))')
+  Hint: Type -  ggplot(data = master_data) + geom_col(mapping = aes(x= year, y= forestland))
+
+
+- Class: cmd_question
+  Output: Good job! As you can see we now have a bar chart of year vs forestland. But, it isn't easy to interpret. Add fill= year and observe the changes.
+
+  CorrectAnswer: ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= forestland, fill= country))
+
+  AnswerTests: omnitest(correctExpr='ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= forestland, fill= country))')
+  Hint: Type - ggplot(data = master_data) + geom_col(mapping = aes(x=year, y= forestland, fill= country))
+
+
+- Class: text
+  Output: Awesome! We now can see the forestland trends of various countries across years. You can further, use the same functions that we used on the year vs urbanpop plot to make aesthetic changes.
+
+- Class: text
+  Output: That concludes our module on bar plots. Feel free to play around with different combinations of variables for more practice. Thank you!
+
